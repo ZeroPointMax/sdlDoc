@@ -1,6 +1,7 @@
 # Nutzung der SDL-Library unter CMake
 
-// @author Maximilian Kerst 12/2019
+// Maximilian Kerst 12/2019
+// Yannis Becker 06/2020
 
 ## Installieren von SDL2
 
