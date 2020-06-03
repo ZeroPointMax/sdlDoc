@@ -1,4 +1,4 @@
-# Nutzung der SDL-Library unter CMake auf Linux
+# Nutzung der SDL-Library unter CMake
 
 // @author Maximilian Kerst 12/2019
 
@@ -8,6 +8,8 @@ Wir brauchen die Pakete sdl2 und sdl2_image.
 Installation auf Linux: distributionsspezifisch, sollte aber schon installiert sein
 
 ## Einbinden von SDL2 in CMake am Beispiel von CLion
+
+### Linux
 
 folgenden Block in die CMakeLists.txt einfügen:
 
@@ -60,7 +62,7 @@ int main(int argc, char* argv []) {
 
 Wenn der Returncode 0 ist, funktioniert SDL2.
 
-### Einbinden von SDL2 in CMake am Beispiel von CLion unter Windows
+### Windows
 
 ```PKG_SEARCH_MODULE``` ist unter Windows nicht verfügbar. Daher ist es notwendig SDL2 über einen Pfad direkt einzubinden.
 
@@ -86,7 +88,7 @@ target_link_libraries(${PROJECT_NAME} ${SDL2_LIB_DIR}/libSDL2.dll.a ${SDL2_LIB_D
   - ``INCLUDE_DIRECTORIES`` um ``${PROJECT_SOURCE_DIR}/include`` erweitern, damit CMake die Header-Dateien berücksichtigt. Bei abweichenden Pfaden muss diese Zeile angepasst werden
   - ``add_executable [projektname] [quelldateien.c]`` um die hinzugefügten Quelldateien, z.B. ``lib/sdlinterf.c`` erweitern, damit CMake diese auch baut
 
-Die CMakeLists.txt sollte damit wie folgt aussehen:
+Die CMakeLists.txt auf einem Linux-System sollte damit wie folgt aussehen (Windows analog):
 
 ```cmake
 cmake_minimum_required(VERSION 3.15)
