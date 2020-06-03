@@ -60,6 +60,25 @@ int main(int argc, char* argv []) {
 
 Wenn der Returncode 0 ist, funktioniert SDL2.
 
+### Einbinden von SDL2 in CMake am Beispiel von CLion unter Windows
+
+```PKG_SEARCH_MODULE``` ist unter Windows nicht verfügbar. Daher ist es notwendig SDL2 über einen Pfad direkt einzubinden.
+
+```cmake
+cmake_minimum_required(VERSION 3.15)
+project(sdltest C)
+
+set(CMAKE_C_STANDARD 11)
+
+add_executable(sdltest main.c)
+
+set(SDL2_DIR C:/dev/SDL2)
+set(SDL2_LIB_DIR ${SDL2_DIR}/lib)
+
+include_directories(${SDL2_DIR}/include)
+target_link_libraries(${PROJECT_NAME} ${SDL2_LIB_DIR}/libSDL2.dll.a ${SDL2_LIB_DIR}/libSDL2main.a -mwindows)
+```
+
 ## Einbinden von C(++) Quell/-Headerdateien in ein CMake-Projekt am Beispiel von sdlinterf
 
 - die gewünschten Dateien in einen neuen Ordner innerhalb des Projektes ablegen, z.B. in lib für Quelldateien oder include für Header-Dateien
