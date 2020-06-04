@@ -13,7 +13,7 @@ Installation auf Linux: distributionsspezifisch, sollte aber schon installiert s
 Installation auf Windows:
 
 - Herunterladen der **32 Bit** Binaries von der [offiziellen Seite](https://www.libsdl.org/download-2.0.php)
-- die .tar.gz mit einer Archivsoftware öffnen (ich empfehle [7-zip](https://7-zip.org)
+- die .tar.gz mit einer Archivsoftware öffnen (ich empfehle [7-zip](https://7-zip.org))
 - SDL2 entweder in die MinGW Ordnerstruktur integrieren ODER irgendwohin entpacken und Pfad merken
 
 Sollte SDL2 irgendwo hin entpackt worden sein, funktioniert ``FindPkgConfig`` eventuell nicht mehr
