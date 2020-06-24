@@ -100,7 +100,7 @@ target_link_libraries(${PROJECT_NAME} ${SDL2_LIB_DIR}/libSDL2.dll.a ${SDL2_LIB_D
 
 - die gewünschten Dateien in einen neuen Ordner innerhalb des Projektes ablegen, z.B. in lib für Quelldateien oder include für Header-Dateien
 - in der CMakeLists.txt...
-  - ``INCLUDE_DIRECTORIES`` um ``${PROJECT_SOURCE_DIR}/include`` erweitern, damit CMake die Header-Dateien berücksichtigt. Bei abweichenden Pfaden muss diese Zeile angepasst werden
+  - ``INCLUDE_DIRECTORIES`` um ``${PROJECT_SOURCE_DIR}/include`` erweitern, damit CMake die eben hinzugefügten Header-Dateien berücksichtigt. **Bei abweichenden Pfaden muss diese Zeile angepasst werden**
   - ``add_executable [projektname] [quelldateien.c]`` um die hinzugefügten Quelldateien, z.B. ``lib/sdlinterf.c`` erweitern, damit CMake diese auch baut
 
 Die CMakeLists.txt auf einem Linux-System sollte damit wie folgt aussehen (Windows analog):
