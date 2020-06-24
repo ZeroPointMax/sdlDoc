@@ -12,7 +12,15 @@ Dieses Dokument wird doppelt versioniert:
 ## Installieren von SDL2
 
 Wir brauchen die Pakete sdl2 und sdl2_image.
-Installation auf Linux: distributionsspezifisch, sollte aber schon installiert sein
+
+Installation auf Linux: distributionsspezifisch, sollte aber schon installiert sein.
+
+Beispiele:
+
+```bash
+sudo pacman -S sdl2 sdl2_image # Arch-Familie
+sudo apt install libsdl2-dev libsdl2-2.0-0 libjpeg-dev libwebp-dev libtiff5-dev libsdl2-image-dev libsdl2-image-2.0-0 # Ubuntu-Familie ab 18.04
+```
 
 ## Einbinden von SDL2 in CMake am Beispiel von CLion
 
