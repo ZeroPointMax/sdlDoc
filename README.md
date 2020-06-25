@@ -75,6 +75,11 @@ Wenn der Returncode 0 ist, funktioniert SDL2.
 
 ### Windows
 
+Windows erfordert etwas mehr Handarbeit. Der Quick-And-Dirty Weg ist, die Pfade direkt einzutragen, dann ist das Projekt jedoch nicht mehr portabel.
+Alternativ kann man FindPkgConfig nachrüsten.
+
+Von den nachfolgenden Methoden ist also **eine** umzusetzen.
+
 #### Direkt einbinden
 
 ```PKG_SEARCH_MODULE``` muss unter MinGW erst installiert werden. Einfacher ist es, SDL2 über einen Pfad direkt einzubinden.
