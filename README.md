@@ -12,9 +12,10 @@ Installation auf Linux: distributionsspezifisch, sollte aber schon installiert s
 
 Installation auf Windows:
 
-- Herunterladen der **32 Bit** Binaries von der [offiziellen Seite](https://www.libsdl.org/download-2.0.php)
+- Herunterladen der **32 Bit** Development-Binaries von der [offiziellen SDL2-Seite](https://www.libsdl.org/download-2.0.php) für SDL2
+- Herunterladen der **32 Bit** Development-Binaries von der [offiziellen SDL2_image-Seite](https://www.libsdl.org/projects/SDL_image/)
 - die .tar.gz mit einer Archivsoftware öffnen (ich empfehle [7-zip](https://7-zip.org))
-- SDL2 entweder in die MinGW Ordnerstruktur integrieren ODER irgendwohin entpacken und Pfad merken
+- SDL2 und SDL2_image entweder in die MinGW Ordnerstruktur integrieren ODER irgendwohin entpacken und Pfad merken - für eine 32 Bit Installation wird der i686-Ordner benötigt
 
 Sollte SDL2 irgendwo hin entpackt worden sein, funktioniert ``FindPkgConfig`` eventuell nicht mehr
 
