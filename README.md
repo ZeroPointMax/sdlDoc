@@ -75,7 +75,9 @@ Wenn der Returncode 0 ist, funktioniert SDL2.
 
 ### Windows
 
-```PKG_SEARCH_MODULE``` ist unter Windows nicht verfügbar. Daher ist es notwendig SDL2 über einen Pfad direkt einzubinden.
+#### Direkt einbinden
+
+```PKG_SEARCH_MODULE``` muss unter MinGW erst installiert werden. Einfacher ist es, SDL2 über einen Pfad direkt einzubinden.
 
 ```cmake
 cmake_minimum_required(VERSION 3.15)
@@ -91,6 +93,20 @@ set(SDL2_LIB_DIR ${SDL2_DIR}/lib)
 include_directories(${SDL2_DIR}/include)
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIB_DIR}/libSDL2.dll.a ${SDL2_LIB_DIR}/libSDL2main.a -mwindows)
 ```
+
+#### mit FindPkgConfig
+
+Voraussetzung: eine installierte MinGW Entwicklungsumgebung
+
+[PkgConfig](http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/pkg-config_0.26-1_win32.zip)
+
+[GLib](http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.28/glib_2.28.8-1_win32.zip)
+
+[GetText Runtime](http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/gettext-runtime_0.18.1.1-2_win32.zip)
+
+-----
+
+[Quelle: Stackoverflow](https://stackoverflow.com/questions/1710922/how-to-install-pkg-config-in-windows)
 
 ## Einbinden von C(++) Quell/-Headerdateien in ein CMake-Projekt am Beispiel von sdlinterf
 
