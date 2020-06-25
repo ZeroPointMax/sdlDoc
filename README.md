@@ -108,6 +108,8 @@ Voraussetzung: eine installierte MinGW Entwicklungsumgebung
 
 [Quelle: Stackoverflow](https://stackoverflow.com/questions/1710922/how-to-install-pkg-config-in-windows)
 
+- die heruntergeladenen Zip-Files in den MinGW Installationspfad entpacken (z.B. ``C:\Mingw``), sodass die Verzeichnisse mergen (``bin`` mit ``bin``, usw.)
+
 ## Einbinden von C(++) Quell/-Headerdateien in ein CMake-Projekt am Beispiel von sdlinterf
 
 - die gewünschten Dateien in einen neuen Ordner innerhalb des Projektes ablegen, z.B. in lib für Quelldateien oder include für Header-Dateien
