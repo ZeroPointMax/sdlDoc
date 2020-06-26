@@ -114,7 +114,9 @@ target_link_libraries(${PROJECT_NAME} ${SDL2_LIB_DIR}/libSDL2.dll.a ${SDL2_LIB_D
 
 #### mit FindPkgConfig
 
-Voraussetzung: eine installierte MinGW Entwicklungsumgebung
+Voraussetzung: eine installierte **32 Bit** MinGW Entwicklungsumgebung
+
+Folgende Pakete sind herunterzuladen:
 
 [PkgConfig](http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/pkg-config_0.26-1_win32.zip)
 
@@ -127,6 +129,7 @@ Voraussetzung: eine installierte MinGW Entwicklungsumgebung
 [Quelle: Stackoverflow](https://stackoverflow.com/questions/1710922/how-to-install-pkg-config-in-windows)
 
 - die heruntergeladenen Zip-Files in den MinGW Installationspfad entpacken (z.B. ``C:\Mingw``), sodass die Verzeichnisse mergen (``bin`` mit ``bin``, usw.)
+- SDL kann nun wie im Linux-Abschnitt beschrieben eingebunden werden
 
 ## Einbinden von C(++) Quell/-Headerdateien in ein CMake-Projekt am Beispiel von sdlinterf
 
