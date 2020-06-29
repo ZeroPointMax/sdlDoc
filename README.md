@@ -1,5 +1,7 @@
 # Nutzung der SDL-Library unter CMake
 
+Jetzt auch auf GitHub Pages: https://zeropointmax.github.io/sdlDoc/
+
 Dieses Dokument wird doppelt versioniert:
 
 - [Github](https://github.com/ZeroPointMax/sdlDoc)
