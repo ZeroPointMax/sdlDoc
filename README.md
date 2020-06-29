@@ -98,6 +98,18 @@ include_directories(${SDL2_DIR}/include)
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIB_DIR}/libSDL2.dll.a ${SDL2_LIB_DIR}/libSDL2main.a -mwindows)
 ```
 
+#### voll-statisch linken
+
+Damit die erzeugten .exe files auch portabel sind, *sollte* man voll-statisch bauen, d.h. alle benötigten Libraries werden in die fertige .exe gepackt und müssen auf anderen Rechnen **nicht** im genau gleichen Ordner vorhanden sein.
+
+Um das zu erreichen, muss folgender Block **über ``add_executable``** eingefügt werden:
+
+````
+link_libraries("-static -lmingw32 -lSDL2main -lSDL2  -Wl,--no-undefined -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid -static-libgcc -lhid -lsetupapi")
+````
+
+Quelle: Prof. Dr. Klaus Kusche
+
 ## Einbinden von C(++) Quell/-Headerdateien in ein CMake-Projekt am Beispiel von sdlinterf
 
 - die gewünschten Dateien in einen neuen Ordner innerhalb des Projektes ablegen, z.B. in lib für Quelldateien oder include für Header-Dateien
