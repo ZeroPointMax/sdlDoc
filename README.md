@@ -13,7 +13,9 @@ Dieses Dokument wird doppelt versioniert:
 
 Wir brauchen die Pakete sdl2 und sdl2_image.
 
-Installation auf Linux: distributionsspezifisch, sollte aber schon installiert sein.
+### Installation auf Linux:
+
+distributionsspezifisch, sollte aber schon installiert sein.
 
 Beispiele:
 
@@ -22,12 +24,29 @@ sudo pacman -S sdl2 sdl2_image # Arch-Familie
 sudo apt install libsdl2-dev libsdl2-2.0-0 libjpeg-dev libwebp-dev libtiff5-dev libsdl2-image-dev libsdl2-image-2.0-0 # Ubuntu-Familie ab 18.04
 ```
 
-Installation auf Windows:
+### Installation auf Windows:
 
-- Herunterladen der **32 Bit** Development-Binaries von der [offiziellen SDL2-Seite](https://www.libsdl.org/download-2.0.php) für SDL2
-- Herunterladen der **32 Bit** Development-Binaries von der [offiziellen SDL2_image-Seite](https://www.libsdl.org/projects/SDL_image/)
+#### Bestimmen der MinGW-Architektur
+
+Die MinGW Architektur kann von der Windows-Architektur abweichen. Das wird für die Installation relevant, da eine falsche Architektur der Pakete nicht funktionieren wird (und man diese anschließend wieder rausfummeln darf).
+
+Einfachster Fall: Windows ist 32 Bit - MinGW ist auch 32 Bit, doh.
+
+Für 64 Bit Windows:
+
+- Powershell oder CMD öffnen
+- ``gcc --version`` ausführen
+
+Die erste Zeile der Ausgabe verrät, welche Architektur installiert ist. Beispiel
+
+``gcc.exe (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 8.1.0`` --> hier handelt es sich um ein 64 Bit MinGW
+
+#### herunterladen und entpacken
+
+- Herunterladen der Development-Pakete von der [offiziellen SDL2-Seite](https://www.libsdl.org/download-2.0.php) für SDL2
+- Herunterladen der Development-Pakete von der [offiziellen SDL2_image-Seite](https://www.libsdl.org/projects/SDL_image/)
 - die .tar.gz mit einer Archivsoftware öffnen (ich empfehle [7-zip](https://7-zip.org))
-- SDL2 und SDL2_image entweder in die MinGW Ordnerstruktur integrieren ODER irgendwohin entpacken und Pfad merken - für eine 32 Bit Installation wird der i686-Ordner benötigt
+- SDL2 und SDL2_image entweder in die MinGW Ordnerstruktur integrieren ODER irgendwohin entpacken und Pfad merken
 
 Sollte SDL2 irgendwo hin entpackt worden sein, funktioniert ``FindPkgConfig`` eventuell nicht mehr
 
@@ -89,13 +108,16 @@ Wenn der Returncode 0 ist, funktioniert SDL2.
 ### Windows
 
 Windows erfordert etwas mehr Handarbeit. Der Quick-And-Dirty Weg ist, die Pfade direkt einzutragen, dann ist das Projekt jedoch nicht mehr portabel.
-Alternativ kann man FindPkgConfig nachrüsten.
+Je nach Architektur von MinGW (siehe oben) kann man FindPkgConfig nachrüsten.
+
+| MinGW-Architektur | verfügbare Methoden                     |
+|-------------------|-----------------------------------------|
+|32 Bit             | - direktes Einbinden<br>- FindPkgConfig |
+|64 Bit             | direktes Einbinden                      |
 
 Von den nachfolgenden Methoden ist also **eine** umzusetzen.
 
 #### Direkt einbinden
-
-```PKG_SEARCH_MODULE``` muss unter MinGW erst installiert werden. Einfacher ist es, SDL2 über einen Pfad direkt einzubinden.
 
 ```cmake
 cmake_minimum_required(VERSION 3.15)
@@ -111,6 +133,25 @@ set(SDL2_LIB_DIR ${SDL2_DIR}/lib)
 include_directories(${SDL2_DIR}/include)
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIB_DIR}/libSDL2.dll.a ${SDL2_LIB_DIR}/libSDL2main.a -mwindows)
 ```
+
+Code zum testen:
+
+```c
+#include <stdio.h>
+#include <SDL.h>
+int WinMain(int argc, char* argv []) {
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+        printf("Error initializing SDL!\n");
+        return 1;
+    }
+    SDL_Quit();
+    return 0;
+}
+```
+
+**zu beachten:**
+- **SDL.h könnte in einem Unterordner liegen, z.B. "SDL2"**
+- **die Main-Funktion heißt jetzt "WinMain"**
 
 #### mit FindPkgConfig
 
