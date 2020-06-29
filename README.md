@@ -100,7 +100,7 @@ target_link_libraries(${PROJECT_NAME} ${SDL2_LIB_DIR}/libSDL2.dll.a ${SDL2_LIB_D
 
 #### voll-statisch linken
 
-Damit die erzeugten .exe files auch portabel sind, *sollte* man voll-statisch bauen, d.h. alle benötigten Libraries werden in die fertige .exe gepackt und müssen auf anderen Rechnen **nicht** im genau gleihen Ordner vorhanden sein.
+Damit die erzeugten .exe files auch portabel sind, *sollte* man voll-statisch bauen, d.h. alle benötigten Libraries werden in die fertige .exe gepackt und müssen auf anderen Rechnen **nicht** im genau gleichen Ordner vorhanden sein.
 
 Um das zu erreichen, muss folgender Block **über ``add_executable``** eingefügt werden:
 
