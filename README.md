@@ -40,7 +40,7 @@ INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS})
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
 ```
 
-die Datei sollte etwa so aussehen: 
+die Datei sollte etwa so aussehen:
 
 ```cmake
 cmake_minimum_required(VERSION 3.15)
@@ -95,8 +95,10 @@ set(SDL2_DIR C:/dev/SDL2)
 set(SDL2_LIB_DIR ${SDL2_DIR}/lib)
 
 include_directories(${SDL2_DIR}/include)
-target_link_libraries(${PROJECT_NAME} ${SDL2_LIB_DIR}/libSDL2.dll.a ${SDL2_LIB_DIR}/libSDL2main.a -mwindows)
+target_link_libraries(${PROJECT_NAME} ${SDL2_LIB_DIR}/libSDL2.dll.a ${SDL2_LIB_DIR}/libSDL2main.a)
 ```
+
+Entgegen der offiziellen SDL-Doku sollte hier auf die Flag ```-mwindows``` verzichtet werden, um Funktionalität für das DOS-Fenster zu erhalten (```stdout```, ...)
 
 #### voll-statisch linken
 
@@ -135,4 +137,3 @@ PKG_SEARCH_MODULE(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
 INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR}/include)
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
 ```
-
