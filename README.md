@@ -41,6 +41,13 @@ Die erste Zeile der Ausgabe verrät, welche Architektur installiert ist. Beispie
 
 ``gcc.exe (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 8.1.0`` --> hier handelt es sich um ein 64 Bit MinGW
 
+``gcc.exe (MinGW.org GCC-8.2.0-5) 8.2.0`` --> hier handelt es sich um ein 32 Bit MinGW
+
+| Architektur | benötigter Unterordner |
+|-------------|------------------------|
+| 32 Bit      | i686                   |
+| 64 Bit      | x86_64                 |
+
 #### herunterladen und entpacken
 
 - Herunterladen der Development-Pakete von der [offiziellen SDL2-Seite](https://www.libsdl.org/download-2.0.php) für SDL2
