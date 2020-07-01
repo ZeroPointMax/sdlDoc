@@ -234,7 +234,7 @@ Code zum testen:
 
 ```c
 #include <stdio.h>
-#include <SDL.h>
+#include <SDL.h> // evtl. #include <SDL2/SDL.h>
 int WinMain(int argc, char* argv []) {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         printf("Error initializing SDL!\n");
