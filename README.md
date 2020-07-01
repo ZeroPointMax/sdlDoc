@@ -1,5 +1,7 @@
 # Nutzung der SDL-Library unter CMake
 
+Jetzt auch auf GitHub Pages: https://zeropointmax.github.io/sdlDoc/
+
 Dieses Dokument wird doppelt versioniert:
 
 - [Github](https://github.com/ZeroPointMax/sdlDoc)
@@ -95,7 +97,7 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
 
 Was passiert hier? Zuerst laden wir "FindPkgConfig" - ein Tool, welches die richtigen Pfade für SDL2 automatisch herzaubert. Dann lassen wir es SDL2 und SDL2_image suchen, was uns die Variablen "SDL2\[...\]" liefert. Mit INCLUDE_DIRECTORIES und TARGET_LINK_LIBRARIES weisen wir CMake an, dem Linker SDL2 mitzugeben.
 
-die Datei sollte etwa so aussehen: 
+die Datei sollte etwa so aussehen:
 
 ```cmake
 cmake_minimum_required(VERSION 3.15)
@@ -183,6 +185,8 @@ include_directories(${SDL2_DIR}/include)
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIB_DIR}/libSDL2.dll.a ${SDL2_LIB_DIR}/libSDL2main.a)
 ```
 
+Entgegen der offiziellen SDL-Doku sollte hier auf die Flag ```-mwindows``` verzichtet werden, um Funktionalität für das DOS-Fenster zu erhalten (```stdout```, ...)
+
 Weitere Erläuterungen zum CMakeLists.txt:
 
 - add_executable legt fest, wie die ausführbare Datei (.exe bei Windows) heißen soll und welche Dateien kompiliert werden sollen. Im o.g. Beispiel bauen wir eine Datei namens ``sdltest`` aus der ``main.c``. Weiter unten im Tutorial kommt eine sdlinterf.c hinzu. Hier müssen also alle C-Files rein, aus denen das Projekt besteht. Sind C-Files in Unterordnern wie *``lib``*, müssen diese auch mit angegeben werden *``lib/sdlinterf.c``*
@@ -225,6 +229,18 @@ int WinMain(int argc, char* argv []) {
 - **SDL.h könnte in einem Unterordner liegen, z.B. "SDL2", wenn der Leser das direkte Einbinden verwendet**
 - **die Main-Funktion heißt jetzt "WinMain"**
 
+#### voll-statisch linken
+
+Damit die erzeugten .exe files auch portabel sind, *sollte* man voll-statisch bauen, d.h. alle benötigten Libraries werden in die fertige .exe gepackt und müssen auf anderen Rechnen **nicht** im genau gleichen Ordner vorhanden sein.
+
+Um das zu erreichen, muss folgender Block **über ``add_executable``** eingefügt werden:
+
+````
+link_libraries("-static -lmingw32 -lSDL2main -lSDL2  -Wl,--no-undefined -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid -static-libgcc -lhid -lsetupapi")
+````
+
+Quelle: Prof. Dr. Klaus Kusche
+
 ## Einbinden von C(++) Quell/-Headerdateien in ein CMake-Projekt am Beispiel von sdlinterf
 
 - die gewünschten Dateien in einen neuen Ordner innerhalb des Projektes ablegen, z.B. in lib für Quelldateien oder include für Header-Dateien
@@ -250,4 +266,3 @@ PKG_SEARCH_MODULE(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
 INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR}/include)
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
 ```
-
