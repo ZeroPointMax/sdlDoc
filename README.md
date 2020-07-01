@@ -9,6 +9,14 @@ Dieses Dokument wird doppelt versioniert:
 
 // Yannis Becker 06/2020
 
+**Hinweis**:
+
+In diesem Tutorial sind viele Pfade und andere Elemente, die auf verschiedenen Systemen abweichen könnten. Daher sind (hoffentlich) alle Pfade, welche ggf. angepasst werden müssen, *kursiv* geschrieben oder anderweitig gekennzeichnet. In diesen Fällen appellieren wir an die Aufmerksamkeit des Lesers, sollte etwas nicht mit Copy-Paste aus diesem Tutorial funktionieren.
+
+Sollten wesentliche Teile des Tutorials fehlen / falsch oder unvollständig sein, bitten wir um ein Issue auf GitHub, damit wir eine Lösung finden können.
+
+Viel Spaß und Erfolg :-)
+
 ## Installieren von SDL2
 
 Wir brauchen die Pakete sdl2 und sdl2_image.
@@ -37,7 +45,7 @@ Für 64 Bit Windows:
 - Powershell oder CMD öffnen
 - ``gcc --version`` ausführen
 
-Die erste Zeile der Ausgabe verrät, welche Architektur installiert ist. Beispiel
+Die erste Zeile der Ausgabe verrät, welche Architektur installiert ist. Beispiel:
 
 ``gcc.exe (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 8.1.0`` --> hier handelt es sich um ein 64 Bit MinGW
 
@@ -52,11 +60,24 @@ Die erste Zeile der Ausgabe verrät, welche Architektur installiert ist. Beispie
 
 - Herunterladen der Development-Pakete von der [offiziellen SDL2-Seite](https://www.libsdl.org/download-2.0.php) für SDL2
 - die .tar.gz mit einer Archivsoftware öffnen (ich empfehle [7-zip](https://7-zip.org))
-- SDL2 und SDL2_image entweder in die MinGW Ordnerstruktur integrieren ODER irgendwohin entpacken und Pfad merken
+- **einen** der folgenden Schritte ausführen:
 
-Sollte SDL2 irgendwo hin entpackt worden sein, funktioniert ``FindPkgConfig`` eventuell nicht mehr
+Variante 1: den Inhalt des *benötigten Unterordners* (siehe oben) so in das MinGW-Installationsverzeichnis entpacken, dass die Ordner bin, lib, include usw. im Archiv mit denen von MinGW *verschmelzen*.
+
+Variante 2: den Inhalt des *benötigten Unterordners* (siehe oben) in ein willkürlich gewähltes Verzeichnis entpacken (möglichst kurzer Pfad und ohne Sonderzeichen / Leerzeichen), z.B.: *``C:\SDL2\``*. Hier unbedingt den Pfad merken, wir brauchen ihn später wieder. Ebenso entfällt hier die Möglichkeit, **SDL2 via FindPkgConfig einzubinden**
+
+**Welche Variante nehmen?**
+
+TL;DR: Empfohlen für Programmier-Übungen in der Gruppe: Variante 1
+
+- Der Vorteil von Möglichkeit 1 ist, dass SDL2 nun im gesamten MinGW bekannt und "installiert" ist - wie auf einem \*nix-System (Linux, macOS,...). Darüber hinaus kann man ein CMake-Projekt, welches auf einem Linux-Computer (und dem Linux-Tutorial) erstellt wurde, auch auf einem Windows-Rechner verwenden Der Nachteil: die Deinstallation ist komplizierter
+- Der Vorteil von Möglichkeit 2 ist, dass SDL2 in einem separaten Ordner, getrennt vom MinGW ist. So kann man seinen MinGW-Ordner sauberer halten. Die Konsequenz: Man muss CMake erstmal beibringen, wo das SDL2 ist. Da jeder die Installation woanders haben könnte, kann man das Projekt nicht einfach auf einen anderen Rechner kopieren, insofern SDL2 nicht am genau gleichen Ort entpackt wurde.
 
 ## Einbinden von SDL2 in CMake am Beispiel von CLion
+
+Hinweis: in diesem Abschnitt sollte das Projekt im CLion schon existieren. Sollten automatisch generierte Teile der CMakeLists.txt von den Beispielen unten abweichen, **sind die automatisch generierten zu verwenden**.
+
+CLion fordert zum Reload der CMakeLists.txt auf, um die Änderungen zu übernehmen. Nach jeder Änderung sollte der Leser dem Nachkommen, da so Fehler in der Datei rechtzeitig bemerkt werden. Des Komforts halber kann auch Auto-Reload aktiviert werden.
 
 ### Linux
 
@@ -71,6 +92,8 @@ PKG_SEARCH_MODULE(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
 INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS})
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
 ```
+
+Was passiert hier? Zuerst laden wir "FindPkgConfig" - ein Tool, welches die richtigen Pfade für SDL2 automatisch herzaubert. Dann lassen wir es SDL2 und SDL2_image suchen, was uns die Variablen "SDL2\[...\]" liefert. Mit INCLUDE_DIRECTORIES und TARGET_LINK_LIBRARIES weisen wir CMake an, dem Linker SDL2 mitzugeben.
 
 die Datei sollte etwa so aussehen: 
 
@@ -93,8 +116,11 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
 
 <a href=https://stackoverflow.com/questions/23850472/how-to-use-sdl2-and-sdl-image-with-cmake>Quelle: Stackoverflow</a>
 
+Weitere Erläuterungen zum CMakeLists.txt:
 
-Zum testen kann man folgenden Code ausführen; nicht schön, aber erfüllt seinen Zweck:
+- add_executable legt fest, wie die ausführbare Datei (.exe bei Windows) heißen soll und welche Dateien kompiliert werden sollen. Im o.g. Beispiel bauen wir eine Datei namens ``sdltest`` aus der ``main.c``. Weiter unten im Tutorial kommt eine sdlinterf.c hinzu. Hier müssen also alle C-Files rein, aus denen das Projekt besteht. Sind C-Files in Unterordnern wie *``lib``*, müssen diese auch mit angegeben werden *``lib/sdlinterf.c``*
+
+Zum testen kann man folgenden C-Code ausführen; nicht schön, aber erfüllt seinen Zweck:
 
 ```c
 #include <stdio.h>
@@ -109,12 +135,12 @@ int main(int argc, char* argv []) {
 }
 ```
 
-Wenn der Returncode 0 ist, funktioniert SDL2.
+Wenn der Returncode 0 ist, funktioniert SDL2 :-)
 
 ### Windows
 
 Windows erfordert etwas mehr Handarbeit. Der Quick-And-Dirty Weg ist, die Pfade direkt einzutragen, dann ist das Projekt jedoch nicht mehr portabel.
-Je nach Architektur von MinGW (siehe oben) kann man FindPkgConfig nachrüsten.
+Je nach Architektur von MinGW (siehe oben) kann man FindPkgConfig nachrüsten. Das ist der **empfohlene Weg**, da er auf allen kompatiblen Systemen gleich funktioniert und das Projekt portabel bleibt. (besonders gut für Projekte, die man später vielleicht noch brauchen könnte)
 
 | MinGW-Architektur | verfügbare Methoden                     |
 |-------------------|-----------------------------------------|
@@ -124,6 +150,23 @@ Je nach Architektur von MinGW (siehe oben) kann man FindPkgConfig nachrüsten.
 Von den nachfolgenden Methoden ist also **eine** umzusetzen.
 
 #### Direkt einbinden
+
+**Hinweis**: alle ``set``-Zeilen **müssen mit dem von der Installation verwendeten Pfad angepasst werden**.
+Sollte SDL2 in die MinGW-Ordnerstruktur integriert worden sein, muss der MinGW-Installationspfad verwendet werden.
+
+Folgenden Block **angepasst** in die CMakeLists.txt eintragen:
+
+```cmake
+set(SDL2_DIR C:/dev/SDL2)
+set(SDL2_LIB_DIR ${SDL2_DIR}/lib)
+
+include_directories(${SDL2_DIR}/include)
+target_link_libraries(${PROJECT_NAME} ${SDL2_LIB_DIR}/libSDL2.dll.a ${SDL2_LIB_DIR}/libSDL2main.a)
+````
+
+Was passiert hier? Die ``set``-Zeilen erstellen CMake-Variablen, die den Pfad von SDL2 speichern. Mit INCLUDE_DIRECTORIES und TARGET_LINK_LIBRARIES weisen wir CMake an, dem Linker SDL2 mitzugeben.
+
+Die CMakeLists.txt sollte damit *etwa* so aussehen:
 
 ```cmake
 cmake_minimum_required(VERSION 3.15)
@@ -137,27 +180,12 @@ set(SDL2_DIR C:/dev/SDL2)
 set(SDL2_LIB_DIR ${SDL2_DIR}/lib)
 
 include_directories(${SDL2_DIR}/include)
-target_link_libraries(${PROJECT_NAME} ${SDL2_LIB_DIR}/libSDL2.dll.a ${SDL2_LIB_DIR}/libSDL2main.a -mwindows)
+target_link_libraries(${PROJECT_NAME} ${SDL2_LIB_DIR}/libSDL2.dll.a ${SDL2_LIB_DIR}/libSDL2main.a)
 ```
 
-Code zum testen:
+Weitere Erläuterungen zum CMakeLists.txt:
 
-```c
-#include <stdio.h>
-#include <SDL.h>
-int WinMain(int argc, char* argv []) {
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-        printf("Error initializing SDL!\n");
-        return 1;
-    }
-    SDL_Quit();
-    return 0;
-}
-```
-
-**zu beachten:**
-- **SDL.h könnte in einem Unterordner liegen, z.B. "SDL2"**
-- **die Main-Funktion heißt jetzt "WinMain"**
+- add_executable legt fest, wie die ausführbare Datei (.exe bei Windows) heißen soll und welche Dateien kompiliert werden sollen. Im o.g. Beispiel bauen wir eine Datei namens ``sdltest`` aus der ``main.c``. Weiter unten im Tutorial kommt eine sdlinterf.c hinzu. Hier müssen also alle C-Files rein, aus denen das Projekt besteht. Sind C-Files in Unterordnern wie *``lib``*, müssen diese auch mit angegeben werden *``lib/sdlinterf.c``*
 
 #### mit FindPkgConfig
 
@@ -177,6 +205,25 @@ Folgende Pakete sind herunterzuladen:
 
 - die heruntergeladenen Zip-Files in den MinGW Installationspfad entpacken (z.B. ``C:\Mingw``), sodass die Verzeichnisse mergen (``bin`` mit ``bin``, usw.)
 - SDL kann nun wie im Linux-Abschnitt beschrieben eingebunden werden
+
+Code zum testen:
+
+```c
+#include <stdio.h>
+#include <SDL.h>
+int WinMain(int argc, char* argv []) {
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+        printf("Error initializing SDL!\n");
+        return 1;
+    }
+    SDL_Quit();
+    return 0;
+}
+```
+
+**zu beachten:**
+- **SDL.h könnte in einem Unterordner liegen, z.B. "SDL2", wenn der Leser das direkte Einbinden verwendet**
+- **die Main-Funktion heißt jetzt "WinMain"**
 
 ## Einbinden von C(++) Quell/-Headerdateien in ein CMake-Projekt am Beispiel von sdlinterf
 
