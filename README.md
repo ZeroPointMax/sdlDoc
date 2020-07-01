@@ -18,6 +18,8 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+![TOC Generator](https://github.com/ZeroPointMax/sdlDoc/workflows/TOC%20Generator/badge.svg)
+
 # Nutzung der SDL-Library unter CMake
 
 Jetzt auch auf GitHub Pages: https://zeropointmax.github.io/sdlDoc/
