@@ -1,3 +1,23 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Inhaltsverzeichnis**
+
+- [Nutzung der SDL-Library unter CMake](#nutzung-der-sdl-library-unter-cmake)
+  - [Installieren von SDL2](#installieren-von-sdl2)
+    - [Installation auf Linux:](#installation-auf-linux)
+    - [Installation auf Windows:](#installation-auf-windows)
+      - [Bestimmen der MinGW-Architektur](#bestimmen-der-mingw-architektur)
+      - [herunterladen und entpacken](#herunterladen-und-entpacken)
+  - [Einbinden von SDL2 in CMake am Beispiel von CLion](#einbinden-von-sdl2-in-cmake-am-beispiel-von-clion)
+    - [Linux](#linux)
+    - [Windows](#windows)
+      - [Direkt einbinden](#direkt-einbinden)
+      - [mit FindPkgConfig](#mit-findpkgconfig)
+      - [voll-statisch linken](#voll-statisch-linken)
+  - [Einbinden von C(++) Quell/-Headerdateien in ein CMake-Projekt am Beispiel von sdlinterf](#einbinden-von-c-quell-headerdateien-in-ein-cmake-projekt-am-beispiel-von-sdlinterf)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Nutzung der SDL-Library unter CMake
 
 Jetzt auch auf GitHub Pages: https://zeropointmax.github.io/sdlDoc/
