@@ -24,11 +24,6 @@
 
 Jetzt auch auf GitHub Pages: https://zeropointmax.github.io/sdlDoc/
 
-Dieses Dokument wird doppelt versioniert:
-
-- [Github](https://github.com/ZeroPointMax/sdlDoc)
-- [ZPMs Kallithea](https://hg.hobbyist-overclock.de/DHGE/sdlsetup)
-
 // Maximilian Kerst 12/2019
 
 // Yannis Becker 06/2020
